@@ -8,14 +8,31 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class MyWorld extends World
 {
-
-    /**
-     * Constructor for objects of class MyWorld.
-     * 
-     */
+    private long lastFrameTimeMS;
+    private double timeStepDuration;
+    
     public MyWorld()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1024, 768, 1); 
+        super(1024, 768, 1, false); 
+        
+        lastFrameTimeMS = System.currentTimeMillis();
+        timeStepDuration = 1.0 / 60; // seems to be the default
     }
+
+    public void started()
+    {
+        lastFrameTimeMS = System.currentTimeMillis();
+    }
+
+    public void act()
+    {
+        timeStepDuration = (System.currentTimeMillis() - lastFrameTimeMS) / 1000.0;
+        lastFrameTimeMS = System.currentTimeMillis();
+    }
+    
+    public double getTimeStepDuration()
+    {
+        return timeStepDuration;
+    }
+    
 }
